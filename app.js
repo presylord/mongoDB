@@ -18,10 +18,11 @@ const user = new User({
   name: "Presy Lord",
   email: "kidlat123@gmail.com",
 });
+user.save();
+
 const userInfo = new UserInfo({
   name: "Presy Lord",
   age: 24,
 });
 
-user.save();
 userInfo.save();
