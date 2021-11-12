@@ -9,8 +9,16 @@ const fruitSchema = new mongoose.Schema({
   },
   color: String,
 });
+const personSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  favoriteFruit: Array,
+});
 
 const Fruit = mongoose.model("fruits", fruitSchema);
+const Person = mongoose.model("persons", personSchema);
 
 const apple = new Fruit({
   name: "Apple",
@@ -25,18 +33,41 @@ const grapes = new Fruit({
   color: "violet",
 });
 
-Fruit.insertMany([apple, banana, grapes], function (err, fruits) {
+const person = new Person({
+  name: "Gol D.",
+  favoriteFruit: apple,
+});
+
+Person.updateOne({ name: "Roger" }, { favoriteFruit: grapes }, function (err) {
   if (err) {
     console.log(err);
   } else {
-    console.log("Fruits saved in the server");
+    console.log("Updated succesfully.");
   }
 });
+// person.save();
 
-Fruit.find(function (err, fruits) {
-  fruits.forEach(function (fruit) {
-    mongoose.connection.close();
+// Fruit.insertMany([apple, banana, grapes], function (err, fruits) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log("Fruits saved in the server");
+//   }
+// });
 
-    console.log(fruit.name);
-  });
-});
+// Fruit.find(function (err, fruits) {
+//   fruits.forEach(function (fruit) {
+//     mongoose.connection.close();
+
+//     console.log(fruit.name);
+//   });
+// });
+
+// Fruit.deleteMany({ name: "Banana" }, function (err) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log("Deleted Succesfully.");
+//   }
+// });
+// mongoose.connection.close();
