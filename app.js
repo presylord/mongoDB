@@ -1,28 +1,39 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/usersDB");
+mongoose.connect("mongodb://localhost:27017/fruitsDB");
 
-const userSchema = new mongoose.Schema({
+const fruitSchema = new mongoose.Schema({
   name: String,
-  email: String,
-});
-const userInfoSchema = new mongoose.Schema({
-  name: String,
-  age: Number,
+  color: String,
 });
 
-const User = mongoose.model("users", userSchema);
-const UserInfo = mongoose.model("userInfo", userInfoSchema);
+const Fruit = mongoose.model("fruits", fruitSchema);
 
-const user = new User({
-  name: "Presy Lord",
-  email: "kidlat123@gmail.com",
+const apple = new Fruit({
+  name: "Apple",
+  color: "red",
 });
-user.save();
-
-const userInfo = new UserInfo({
-  name: "Presy Lord",
-  age: 24,
+const banana = new Fruit({
+  name: "Banana",
+  color: "yellow",
+});
+const grapes = new Fruit({
+  name: "Grapes",
+  color: "violet",
 });
 
-userInfo.save();
+// Fruit.insertMany([apple, banana, grapes], function (err, fruits) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log("Fruits saved in the server");
+//   }
+// });
+
+Fruit.find(function (err, fruits) {
+  fruits.forEach(function (fruit) {
+    mongoose.connection.close();
+
+    console.log(fruit.name);
+  });
+});
