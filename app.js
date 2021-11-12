@@ -3,7 +3,10 @@ const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost:27017/fruitsDB");
 
 const fruitSchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true,
+  },
   color: String,
 });
 
@@ -22,13 +25,13 @@ const grapes = new Fruit({
   color: "violet",
 });
 
-// Fruit.insertMany([apple, banana, grapes], function (err, fruits) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log("Fruits saved in the server");
-//   }
-// });
+Fruit.insertMany([apple, banana, grapes], function (err, fruits) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("Fruits saved in the server");
+  }
+});
 
 Fruit.find(function (err, fruits) {
   fruits.forEach(function (fruit) {
